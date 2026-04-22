@@ -13,10 +13,16 @@ async function runDemo() {
     const db = client.db(dbName);
     const books = db.collection('books');
     const members = db.collection('members');
+    const authors = db.collection('authors');
+    const customers = db.collection('customers');
+    const orders = db.collection('orders');
 
     // Clean up before demo
     await books.deleteMany({});
     await members.deleteMany({});
+    await authors.deleteMany({});
+    await customers.deleteMany({});
+    await orders.deleteMany({});
 
     // --- 1. Indexing ---
     console.log("\n--- 1. Indexing ---");
@@ -55,6 +61,33 @@ async function runDemo() {
     }
     const insertManyResult = await books.insertMany(initialBooks);
     console.log(`Inserted ${insertManyResult.insertedCount} books`);
+
+    // --- 3b. Insert Authors, Customers, Orders ---
+    console.log("\n--- 3b. Insert Authors, Customers, Orders (10 each) ---");
+    const authorDocs = Array.from({ length: 10 }, (_, i) => ({
+      name: `Author ${i + 1}`,
+      country: i % 2 === 0 ? "USA" : "UK",
+      birthYear: 1950 + i
+    }));
+    await authors.insertMany(authorDocs);
+    console.log(`Inserted 10 authors`);
+
+    const customerDocs = Array.from({ length: 10 }, (_, i) => ({
+      name: `Customer ${i + 1}`,
+      email: `customer${i + 1}@example.com`,
+      loyaltyPoints: Math.floor(Math.random() * 100)
+    }));
+    const custInsertRes = await customers.insertMany(customerDocs);
+    console.log(`Inserted 10 customers`);
+
+    const orderDocs = Array.from({ length: 10 }, (_, i) => ({
+      orderId: `ORD-${1000 + i}`,
+      customerId: custInsertRes.insertedIds[i],
+      totalAmount: Math.round((20 + Math.random() * 50) * 100) / 100,
+      orderDate: new Date()
+    }));
+    await orders.insertMany(orderDocs);
+    console.log(`Inserted 10 orders`);
 
     // --- 4. Find ---
     console.log("\n--- 4. Find ---");

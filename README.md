@@ -22,20 +22,13 @@ A simple bookstore database system demonstrating the use of MongoDB with a Node.
 3. **Run the API Server**
    Start the Express server:
    ```bash
-   npm start
+   node server.js
    ```
    The server will listen on `http://localhost:3000`.
 
-4. **Run the Database Queries Demo**
-   To execute the 15 required queries (insertions, updates, aggregations, etc.) and generate the 35+ records, open a new terminal and run:
-   ```bash
-   npm run demo
-   ```
-   This will output the results of all 15 queries to the console.
-
 ## API Documentation & Sample Requests
 
-You can use Postman or Swagger to test these endpoints. Below are sample requests and responses.
+You can use Postman to test these endpoints. Below are sample requests and responses.
 
 ### 1. GET /api/books
 Fetch all books in the database.
@@ -138,6 +131,5 @@ Delete a book by ID.
 
 ## Demo Video Instructions
 For your submission, use screen recording software to:
-1. Start the server (`npm start`).
-2. Run the queries demo (`npm run demo`) and show the console output.
-3. Open Postman and demonstrate hitting each of the 5 API endpoints (`POST`, `GET`, `GET/ID`, `PUT`, `DELETE`).
+1. Start the server (`node server.js`).
+2. Open Postman and demonstrate hitting each of the 5 API endpoints (`GET`,`POST`,  `GET/ID`, `PUT`, `DELETE`).
